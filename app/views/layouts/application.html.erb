@@ -11,11 +11,12 @@
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <meta name="theme-color" content="#111827">
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <%# <link rel="icon" href="/icon.svg" type="image/svg+xml"> %>
+    <link rel="icon" href="/icons/icon-192.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -23,6 +24,19 @@
   </head>
 
   <body>
+    <header class="bg-yellow-600 hidden" data-controller="offline">
+      <p class="text-white text-center py-2">You are offline — content may be outdated</p>
+    </header>
+    <%# <button id="revisitCookieConsent">Cookie settings</button> %>
+    <div class="w-full flex h-auto bg-amber-100 justify-end gap-2 ">
+      <button id="installBtn" class="hidden left-0 px-4 py-2 rounded-xl bg-indigo-200 text-black shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">Install app</button>
+      <button
+        id="enableNotifications"
+        class="px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800"
+      >
+        Enable notifications
+      </button>
+    </div>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
